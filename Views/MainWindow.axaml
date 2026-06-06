@@ -1,13 +1,18 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:ControllerWrangler.ViewModels"
+        xmlns:local="using:ControllerWrangler.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         x:Class="ControllerWrangler.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ControllerWrangler">
+        Title="Controller Wrangler"
+        Width="1200" 
+        Height="800"
+        MinWidth="800"
+        MinHeight="600">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,6 +20,21 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <!--<TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+    <!-- Now we add a split view -->
+    <SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="150">
+        <SplitView.Pane>
+            <!--<Button BorderThickness="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"> Settings </Button>-->
+             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                <Button BorderThickness="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" TextBlock.TextAlignment="Center" Click="Pannel_button_Click" CommandParameter="Main"> Main </Button>
+                <!--<Button BorderThickness="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"> About </Button> -->
+                <Button BorderThickness="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" TextBlock.TextAlignment="Center" Click="Pannel_button_Click" CommandParameter="Settings"> Settings </Button>
+            </StackPanel>
+        </SplitView.Pane>
+        <!--<TextBlock Text="Content" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+        <SplitView.Content>
+            <local:MainContentView IsEnabled="True"/>
+        </SplitView.Content>
+    </SplitView>
 
 </Window>
