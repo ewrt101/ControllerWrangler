@@ -22,7 +22,7 @@
 
     <!--<TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
     <!-- Now we add a split view -->
-    <SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="150">
+    <SplitView x:Name="MainSplitView" IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="150">
         <SplitView.Pane>
             <!--<Button BorderThickness="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"> Settings </Button>-->
              <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
@@ -33,7 +33,7 @@
         </SplitView.Pane>
         <!--<TextBlock Text="Content" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
         <SplitView.Content>
-            <local:MainContentView IsEnabled="True"/>
+            <local:MainContentView/>
         </SplitView.Content>
     </SplitView>
 
