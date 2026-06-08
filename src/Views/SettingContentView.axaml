@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ControllerWrangler.Views.SettingContentView">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Settings" FontSize="36" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Driver Version:" FontSize="24" Margin="0,0,10,0"/>
+                <ComboBox SelectedIndex="0" MaxDropDownHeight="100" Width="200">
+                    <ComboBoxItem>RadDriver V1</ComboBoxItem>
+                    <ComboBoxItem>OpenGloves V1</ComboBoxItem>
+                    <ComboBoxItem>OpenGloves V2</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

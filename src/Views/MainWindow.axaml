@@ -33,7 +33,7 @@
         </SplitView.Pane>
         <!--<TextBlock Text="Content" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
         <SplitView.Content>
-            <local:MainContentView/>
+            <!--<local:MainContentView/>-->
         </SplitView.Content>
     </SplitView>
 

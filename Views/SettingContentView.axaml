@@ -1,7 +1,0 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="ControllerWrangler.Views.SettingContentView">
-    <Grid>
-        <TextBlock Text="Setting Content" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-    </Grid>
-</UserControl>
