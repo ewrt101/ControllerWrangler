@@ -1,21 +1,20 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System.Diagnostics;
-//using ControllerWrangler.Views;
 
 namespace ControllerWrangler.Views;
 
 public partial class MainWindow : Window
 {
-    //store Contentview
-    //private readonly UserControl _mainContentView = new MainContentView();
-    //private readonly UserControl _settingContentView = new UserControl();
+    //store a main content view and a setting content view to switch between them
+    private readonly MainContentView _mainContentView = new MainContentView();
+    private readonly SettingContentView _settingContentView = new SettingContentView();
 
     public MainWindow()
     {
         InitializeComponent();
         // Set initial content to MainContentView6
-        //MainSplitView.Content = _mainContentView;
+        MainSplitView.Content = _mainContentView;
     }
 
     private void Pannel_button_Click(object sender, RoutedEventArgs e)
@@ -28,11 +27,11 @@ public partial class MainWindow : Window
             switch (param)
             {
                 case "Main":
-                    //MainSplitView.Content = _mainContentView;
+                    MainSplitView.Content = _mainContentView;
                     Debug.WriteLine("Switched to MainContentView");
                     break;
                 case "Settings":
-                    //MainSplitView.Content = _settingContentView;
+                    MainSplitView.Content = _settingContentView;
                     Debug.WriteLine("Switched to SettingContentView");
                     break;
                 default:
