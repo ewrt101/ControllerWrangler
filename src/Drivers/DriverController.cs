@@ -28,11 +28,13 @@ public abstract class DriverController<TData, TEnum> where TData : struct where 
         Debug.WriteLine($"Initializing {DriverName} ({DriverVersion})");
         InputMappingsLeft = new Dictionary<TEnum, object>();
         InputMappingsRight = new Dictionary<TEnum, object>();
-        PipeClientLeft = new NamedPipeClientStream(".", PipePath+"\\left", PipeDirection.InOut, PipeOptions.Asynchronous);
-        PipeClientRight = new NamedPipeClientStream(".", PipePath+"\\right", PipeDirection.InOut, PipeOptions.Asynchronous);
+        PipeClientLeft = new NamedPipeClientStream(".", PipePath+"left", PipeDirection.Out, PipeOptions.Asynchronous);
+        PipeClientRight = new NamedPipeClientStream(".", PipePath+"right", PipeDirection.Out, PipeOptions.Asynchronous);
     }
 
     public abstract (TData,TData) CreateInput(); //this method will be used to create a new input struct with the current state of the controller, such as which buttons are pressed and the position of the joysticks.
+
+    public abstract String GetDefaultMappingXbox();
 
     public void Connect()
     {

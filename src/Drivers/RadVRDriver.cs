@@ -64,7 +64,7 @@ public enum RadVRDriverInputV1
 
 public class RadVRController : DriverController<RadVRControllerDataV1, RadVRDriverInputV1>
 {
-    protected override string PipePath => "\\\\.\\pipe\\vrapplication\\input\\radvr\\v1\\";
+    protected override string PipePath => @"vrapplication\input\radvr\v1\";
     protected override string DriverName => "RadVR Driver";
     protected override string DriverVersion => "v1";
 
@@ -115,5 +115,48 @@ public class RadVRController : DriverController<RadVRControllerDataV1, RadVRDriv
             splay = new float[5]
         };
         return (lefthand, righthand);
+    }
+
+    public override string GetDefaultMappingXbox()
+    {
+        // Return a default mapping configuration for 2 Xbox controllers (left and right) as a JSON string
+        return @"[
+        {
+            ""LeftTrigger"": ""Trigger"",
+            ""LeftGrip"": ""Grip"",
+            ""LeftTriggerClick"": ""TriggerClick"",
+            ""LeftGripClick"": ""GripClick"",
+            ""DPadLeft"": ""ButtonA"",
+            ""DPadUp"": ""ButtonB"",
+            ""DPadDown"": ""ButtonC"",
+            ""DPadRight"": ""ButtonD"",
+            ""Back"": ""Calibrate"",
+            ""Start"": ""Menu"",
+            ""LeftThumbstickX"": ""JoystickX"",
+            ""LeftThumbstickY"": ""JoystickY"",
+            ""LeftThumbstickClick"": ""JoystickClick"",
+            ""RighThumbstickX"": ""Joystick2X"",
+            ""RightThumbstickY"": ""Joystick2Y"",
+            ""RightThumbstickClick"": ""Joystick2Click""
+            
+        },
+        {
+            ""RightTrigger"": ""Trigger"",
+            ""RightGrip"": ""Grip"",
+            ""RightTriggerClick"": ""TriggerClick"",
+            ""RightGripClick"": ""GripClick"",
+            ""A"": ""ButtonA"",
+            ""B"": ""ButtonB"",
+            ""X"": ""ButtonC"",
+            ""Y"": ""ButtonD"",
+            ""Back"": ""Calibrate"",
+            ""Start"": ""Menu"",
+            ""RightThumbstickX"": ""JoystickX"",
+            ""RightThumbstickY"": ""JoystickY"",
+            ""RightThumbstickClick"": ""JoystickClick"",
+            ""LeftThumbstickX"": ""Joystick2X"",
+            ""LeftThumbstickY"": ""Joystick2Y"",
+            ""LeftThumbstickClick"": ""Joystick2Click""
+        }]";
     }
 }   

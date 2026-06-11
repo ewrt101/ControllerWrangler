@@ -7,7 +7,7 @@ using Avalonia.Markup.Xaml;
 using ControllerWrangler.ViewModels;
 using ControllerWrangler.Views;
 using System.Diagnostics;
-using ControllerWrangler.Driver;
+using ControllerWrangler.Input;
 
 namespace ControllerWrangler;
 
@@ -19,8 +19,8 @@ public partial class App : Application
         Debug.WriteLine("Welcome to Controller Wrangler!");
 
         //TESTING ON BOOT - REMOVE LATER
-        //var driverController = new RadVRController();
-        //driverController.Connect();
+        var inputManagement = new InputManagement(DriverType.RadVRV1);
+        inputManagement.Start();
     }
 
     public override void OnFrameworkInitializationCompleted()
