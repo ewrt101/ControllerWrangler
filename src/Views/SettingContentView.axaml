@@ -7,9 +7,9 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Driver Version:" FontSize="24" Margin="0,0,10,0"/>
                 <ComboBox SelectedIndex="0" MaxDropDownHeight="100" Width="200">
-                    <ComboBoxItem>RadDriver V1</ComboBoxItem>
-                    <ComboBoxItem>OpenGloves V1</ComboBoxItem>
-                    <ComboBoxItem>OpenGloves V2</ComboBoxItem>
+                    <ComboBoxItem IsEnabled="True">RadDriver V1</ComboBoxItem>
+                    <ComboBoxItem IsEnabled="False">OpenGloves V1</ComboBoxItem>
+                    <ComboBoxItem IsEnabled="False">OpenGloves V2</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
         </StackPanel>

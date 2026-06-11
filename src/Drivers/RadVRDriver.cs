@@ -58,6 +58,8 @@ public enum RadVRDriverInputV1
     Joystick2X,
     Joystick2Y,
     Joystick2Click,
+    Flexion,
+    Splay
 }
 
 public class RadVRController : DriverController<RadVRControllerDataV1, RadVRDriverInputV1>
@@ -66,31 +68,52 @@ public class RadVRController : DriverController<RadVRControllerDataV1, RadVRDriv
     protected override string DriverName => "RadVR Driver";
     protected override string DriverVersion => "v1";
 
-    public override RadVRControllerDataV1 CreateInput()
+    public override (RadVRControllerDataV1, RadVRControllerDataV1) CreateInput()
     {
-        // This method should create a new RadVRControllerData struct with the current state of the controller.
-        // For now, we'll just return an empty struct. You will need to fill this in with the actual data from the controller.
-        return new RadVRControllerDataV1
+        RadVRControllerDataV1 lefthand = new RadVRControllerDataV1
         {
             header = 0x56444152, // 'RADV' in little-endian
-            triggerValue = InputMappings.ContainsKey(RadVRDriverInputV1.Trigger) ? Convert.ToSingle(InputMappings[RadVRDriverInputV1.Trigger]) : 0.0f,
-            gripValue = InputMappings.ContainsKey(RadVRDriverInputV1.Grip) ? Convert.ToSingle(InputMappings[RadVRDriverInputV1.Grip]) : 0.0f,
-            triggerClick = InputMappings.ContainsKey(RadVRDriverInputV1.TriggerClick) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.TriggerClick]) : (byte)0,
-            gripClick = InputMappings.ContainsKey(RadVRDriverInputV1.GripClick) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.GripClick]) : (byte)0,
-            buttonA = InputMappings.ContainsKey(RadVRDriverInputV1.ButtonA) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.ButtonA]) : (byte)0,
-            buttonB = InputMappings.ContainsKey(RadVRDriverInputV1.ButtonB) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.ButtonB]) : (byte)0,
-            buttonC = InputMappings.ContainsKey(RadVRDriverInputV1.ButtonC) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.ButtonC]) : (byte)0,
-            buttonD = InputMappings.ContainsKey(RadVRDriverInputV1.ButtonD) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.ButtonD]) : (byte)0,
-            calibrate = InputMappings.ContainsKey(RadVRDriverInputV1.Calibrate) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.Calibrate]) : (byte)0,
-            menu = InputMappings.ContainsKey(RadVRDriverInputV1.Menu) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.Menu]) : (byte)0,
-            joystickX = InputMappings.ContainsKey(RadVRDriverInputV1.JoystickX) ? Convert.ToSingle(InputMappings[RadVRDriverInputV1.JoystickX]) : 0.0f,
-            joystickY = InputMappings.ContainsKey(RadVRDriverInputV1.JoystickY) ? Convert.ToSingle(InputMappings[RadVRDriverInputV1.JoystickY]) : 0.0f,
-            joystickClick = InputMappings.ContainsKey(RadVRDriverInputV1.JoystickClick) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.JoystickClick]) : (byte)0,
-            joystick2X = InputMappings.ContainsKey(RadVRDriverInputV1.Joystick2X) ? Convert.ToSingle(InputMappings[RadVRDriverInputV1.Joystick2X]) : 0.0f,
-            joystick2Y = InputMappings.ContainsKey(RadVRDriverInputV1.Joystick2Y) ? Convert.ToSingle(InputMappings[RadVRDriverInputV1.Joystick2Y]) : 0.0f,
-            joystick2Click = InputMappings.ContainsKey(RadVRDriverInputV1.Joystick2Click) ? Convert.ToByte(InputMappings[RadVRDriverInputV1.Joystick2Click]) : (byte)0,
+            triggerValue = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Trigger) ? Convert.ToSingle(InputMappingsLeft[RadVRDriverInputV1.Trigger]) : 0.0f,
+            gripValue = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Grip) ? Convert.ToSingle(InputMappingsLeft[RadVRDriverInputV1.Grip]) : 0.0f,
+            triggerClick = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.TriggerClick) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.TriggerClick]) : (byte)0,
+            gripClick = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.GripClick) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.GripClick]) : (byte)0,
+            buttonA = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.ButtonA) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.ButtonA]) : (byte)0,
+            buttonB = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.ButtonB) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.ButtonB]) : (byte)0,
+            buttonC = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.ButtonC) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.ButtonC]) : (byte)0,
+            buttonD = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.ButtonD) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.ButtonD]) : (byte)0,
+            calibrate = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Calibrate) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.Calibrate]) : (byte)0,
+            menu = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Menu) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.Menu]) : (byte)0,
+            joystickX = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.JoystickX) ? Convert.ToSingle(InputMappingsLeft[RadVRDriverInputV1.JoystickX]) : 0.0f,
+            joystickY = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.JoystickY) ? Convert.ToSingle(InputMappingsLeft[RadVRDriverInputV1.JoystickY]) : 0.0f,
+            joystickClick = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.JoystickClick) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.JoystickClick]) : (byte)0,
+            joystick2X = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Joystick2X) ? Convert.ToSingle(InputMappingsLeft[RadVRDriverInputV1.Joystick2X]) : 0.0f,
+            joystick2Y = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Joystick2Y) ? Convert.ToSingle(InputMappingsLeft[RadVRDriverInputV1.Joystick2Y]) : 0.0f,
+            joystick2Click = InputMappingsLeft.ContainsKey(RadVRDriverInputV1.Joystick2Click) ? Convert.ToByte(InputMappingsLeft[RadVRDriverInputV1.Joystick2Click]) : (byte)0,
             flexion = new float[20],
             splay = new float[5]
         };
+        RadVRControllerDataV1 righthand = new RadVRControllerDataV1
+        {
+            header = 0x56444152, // 'RADV' in little-endian
+            triggerValue = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Trigger) ? Convert.ToSingle(InputMappingsRight[RadVRDriverInputV1.Trigger]) : 0.0f,
+            gripValue = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Grip) ? Convert.ToSingle(InputMappingsRight[RadVRDriverInputV1.Grip]) : 0.0f,
+            triggerClick = InputMappingsRight.ContainsKey(RadVRDriverInputV1.TriggerClick) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.TriggerClick]) : (byte)0,
+            gripClick = InputMappingsRight.ContainsKey(RadVRDriverInputV1.GripClick) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.GripClick]) : (byte)0,
+            buttonA = InputMappingsRight.ContainsKey(RadVRDriverInputV1.ButtonA) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.ButtonA]) : (byte)0,
+            buttonB = InputMappingsRight.ContainsKey(RadVRDriverInputV1.ButtonB) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.ButtonB]) : (byte)0,
+            buttonC = InputMappingsRight.ContainsKey(RadVRDriverInputV1.ButtonC) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.ButtonC]) : (byte)0,
+            buttonD = InputMappingsRight.ContainsKey(RadVRDriverInputV1.ButtonD) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.ButtonD]) : (byte)0,
+            calibrate = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Calibrate) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.Calibrate]) : (byte)0,
+            menu = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Menu) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.Menu]) : (byte)0,
+            joystickX = InputMappingsRight.ContainsKey(RadVRDriverInputV1.JoystickX) ? Convert.ToSingle(InputMappingsRight[RadVRDriverInputV1.JoystickX]) : 0.0f,
+            joystickY = InputMappingsRight.ContainsKey(RadVRDriverInputV1.JoystickY) ? Convert.ToSingle(InputMappingsRight[RadVRDriverInputV1.JoystickY]) : 0.0f,
+            joystickClick = InputMappingsRight.ContainsKey(RadVRDriverInputV1.JoystickClick) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.JoystickClick]) : (byte)0,
+            joystick2X = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Joystick2X) ? Convert.ToSingle(InputMappingsRight[RadVRDriverInputV1.Joystick2X]) : 0.0f,
+            joystick2Y = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Joystick2Y) ? Convert.ToSingle(InputMappingsRight[RadVRDriverInputV1.Joystick2Y]) : 0.0f,
+            joystick2Click = InputMappingsRight.ContainsKey(RadVRDriverInputV1.Joystick2Click) ? Convert.ToByte(InputMappingsRight[RadVRDriverInputV1.Joystick2Click]) : (byte)0,
+            flexion = new float[20],
+            splay = new float[5]
+        };
+        return (lefthand, righthand);
     }
 }   

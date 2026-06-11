@@ -19,8 +19,8 @@ public partial class App : Application
         Debug.WriteLine("Welcome to Controller Wrangler!");
 
         //TESTING ON BOOT - REMOVE LATER
-        var driverController = new RadVRController();
-        driverController.Connect();
+        //var driverController = new RadVRController();
+        //driverController.Connect();
     }
 
     public override void OnFrameworkInitializationCompleted()

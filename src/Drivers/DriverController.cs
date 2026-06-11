@@ -18,24 +18,29 @@ public abstract class DriverController<TData, TEnum> where TData : struct where 
     protected abstract string PipePath { get; }
     protected abstract string DriverName { get; }
     protected abstract string DriverVersion { get; }
-    public Dictionary<TEnum, object> InputMappings { get; }
-    protected NamedPipeClientStream PipeClient { get; private set; }
+    public Dictionary<TEnum, object> InputMappingsLeft { get; }
+    public Dictionary<TEnum, object> InputMappingsRight { get; }
+    protected NamedPipeClientStream PipeClientLeft { get; private set; }
+    protected NamedPipeClientStream PipeClientRight { get; private set; }
 
     public DriverController()
     {
         Debug.WriteLine($"Initializing {DriverName} ({DriverVersion})");
-        InputMappings = new Dictionary<TEnum, object>();
-        PipeClient = new NamedPipeClientStream(".", PipePath, PipeDirection.InOut, PipeOptions.Asynchronous);
+        InputMappingsLeft = new Dictionary<TEnum, object>();
+        InputMappingsRight = new Dictionary<TEnum, object>();
+        PipeClientLeft = new NamedPipeClientStream(".", PipePath+"\\left", PipeDirection.InOut, PipeOptions.Asynchronous);
+        PipeClientRight = new NamedPipeClientStream(".", PipePath+"\\right", PipeDirection.InOut, PipeOptions.Asynchronous);
     }
 
-    public abstract TData CreateInput(); //this method will be used to create a new input struct with the current state of the controller, such as which buttons are pressed and the position of the joysticks.
+    public abstract (TData,TData) CreateInput(); //this method will be used to create a new input struct with the current state of the controller, such as which buttons are pressed and the position of the joysticks.
 
     public void Connect()
     {
         try
         {
-            PipeClient.Connect(5000); // Wait up to 5 seconds to connect
-            Debug.WriteLine($"Connected to {DriverName} ({DriverVersion})");
+            PipeClientLeft.Connect(5000); // Wait up to 5 seconds to connect
+            PipeClientRight.Connect(5000); // Wait up to 5 seconds to connect
+            Debug.WriteLine($"Connected to {DriverName} ({DriverVersion}) on pipe path: {PipePath}");
         }
         catch (TimeoutException)
         {
@@ -49,23 +54,32 @@ public abstract class DriverController<TData, TEnum> where TData : struct where 
 
     public void Disconnect()
     {
-        if (PipeClient.IsConnected)
+        if (PipeClientLeft.IsConnected)
         {
-            PipeClient.Close();
-            Debug.WriteLine($"Disconnected from {DriverName} ({DriverVersion})");
+            PipeClientLeft.Close();
         }
+        if (PipeClientRight.IsConnected)
+        {
+            PipeClientRight.Close();
+        }
+        Debug.WriteLine($"Disconnected from {DriverName} ({DriverVersion})");
     }
 
-    public void SendInput(TData input)
+    public void SendInput(TData inputLeft, TData inputRight)
     {
-        if (PipeClient.IsConnected)
+        if (PipeClientLeft.IsConnected)
         {
             try
             {
                 // Serialize the input struct to bytes and send it through the pipe
-                byte[] inputData = StructToBytes(input);
-                PipeClient.Write(inputData, 0, inputData.Length);
-                PipeClient.Flush();
+                //left
+                byte[] inputData = StructToBytes(inputLeft);
+                PipeClientLeft.Write(inputData, 0, inputData.Length);
+                PipeClientLeft.Flush();
+                //right
+                inputData = StructToBytes(inputRight);
+                PipeClientRight.Write(inputData, 0, inputData.Length);
+                PipeClientRight.Flush();
             }
             catch (Exception ex)
             {
